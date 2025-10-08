@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us – Internship & Job Portal{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <h2 class="text-center mb-4">Contact Us</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <form action="https://formspree.io/f/{FORM_ID}" method="POST" class="form-group bg-light p-4 rounded shadow">
+                <!-- Name -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <!-- Subject -->
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" required>
+                </div>
+
+                <!-- Message -->
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="6" required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Optional: Map or Contact Info Section -->
+<section class="container py-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <i class="fas fa-map-marker-alt fa-2x mb-2"></i>
+            <h5>Location</h5>
+            <p>North-West University, Potchefstroom Campus, South Africa</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="fas fa-envelope fa-2x mb-2"></i>
+            <h5>Email</h5>
+            <p>info@internshipportal.com</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="fas fa-phone fa-2x mb-2"></i>
+            <h5>Phone</h5>
+            <p>+27 12 345 6789</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

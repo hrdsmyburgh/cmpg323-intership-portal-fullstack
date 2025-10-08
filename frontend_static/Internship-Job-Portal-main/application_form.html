@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Application Form – Internship & Job Portal{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <h2 class="text-center mb-5 fw-bold">Application Form</h2>
+
+    <!-- Application Form -->
+    <form 
+        action="https://formspree.io/f/{FORM_ID}" 
+        method="POST" 
+        enctype="multipart/form-data" 
+        class="bg-white p-5 rounded shadow-sm border border-light"
+    >
+
+        <!-- Personal Details Section -->
+        <fieldset class="mb-5">
+            <legend class="fw-bold text-primary mb-3">Personal Details</legend>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input id="name" type="text" name="name" class="form-control" placeholder="John Doe" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input id="dob" type="date" name="dob" class="form-control" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Contact Details Section -->
+        <fieldset class="mb-5">
+            <legend class="fw-bold text-primary mb-3">Contact Information</legend>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input id="email" type="email" name="email" class="form-control" placeholder="example@email.com" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="number" class="form-label">Contact Number</label>
+                    <input id="number" type="tel" name="number" class="form-control" placeholder="+27 00 000 0000" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- References and Uploads -->
+        <fieldset class="mb-5">
+            <legend class="fw-bold text-primary mb-3">References & Uploads</legend>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="cv-file" class="form-label">Upload CV</label>
+                    <input type="file" id="cv-file" name="cv" class="form-control" accept=".pdf,.doc,.docx" required>
+                    <small class="text-muted">Accepted formats: PDF, DOC, DOCX</small>
+                </div>
+                <div class="col-md-6">
+                    <label for="cover-file" class="form-label">Upload Cover Letter</label>
+                    <input type="file" id="cover-file" name="cover_letter" class="form-control" accept=".pdf,.doc,.docx">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Additional Information -->
+        <fieldset class="mb-5">
+            <legend class="fw-bold text-primary mb-3">Additional Information</legend>
+            <div class="mb-3">
+                <label for="position" class="form-label">Position Applied For</label>
+                <input type="text" id="position" name="position" class="form-control" placeholder="Internship Title or Job Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Why are you a good fit?</label>
+                <textarea id="message" name="message" rows="4" class="form-control" placeholder="Describe your strengths, goals, or experience..." required></textarea>
+            </div>
+        </fieldset>
+
+        <!-- Consent -->
+        <fieldset class="mb-4">
+            <div class="form-check">
+                <input type="checkbox" name="bgv-consent" id="bgv-consent" class="form-check-input" required>
+                <label for="bgv-consent" class="form-check-label">
+                    I consent to background verification and confirm that all details provided are accurate.
+                </label>
+            </div>
+        </fieldset>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+                Submit Application
+            </button>
+        </div>
+    </form>
+</main>
+
+<!-- JavaScript for file name display -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const cvInput = document.getElementById("cv-file");
+    const coverInput = document.getElementById("cover-file");
+
+    if (cvInput) {
+        cvInput.addEventListener("change", () => {
+            if (cvInput.files[0]) alert("CV Selected: " + cvInput.files[0].name);
+        });
+    }
+
+    if (coverInput) {
+        coverInput.addEventListener("change", () => {
+            if (coverInput.files[0]) alert("Cover Letter Selected: " + coverInput.files[0].name);
+        });
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Post a Job – Internship & Job Portal{% endblock %}
+
+{% block content %}
+<main class="container mt-5 mb-5">
+    <h2 class="mb-4">Post a New Job</h2>
+
+    <form method="POST" class="fs-form fs-layout__2-column">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="fs-field mb-3">
+                <label class="fs-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="fs-checkbox-field col-span-full mb-3">
+            <div class="fs-checkbox-wrapper">
+                <input type="checkbox" id="bgv-consent" name="bgv-consent" required />
+            </div>
+            <label for="bgv-consent">Background check consent</label>
+            <p class="fs-description" id="bgv-consent-description">
+                By checking this box, you consent to receiving applications from external and internal profiles.
+            </p>
+        </div>
+
+        <div class="fs-button-group">
+            <button class="fs-button btn btn-primary" type="submit">Submit Job Posting</button>
+        </div>
+    </form>
+</main>
+
+<footer>
+    <div class="footer-area footer-bg footer-padding">
+        <div class="container">
+            <div class="row d-flex justify-content-between">
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-footer-caption mb-50">
+                        <div class="footer-tittle">
+                            <h4>About Us</h4>
+                            <p>Internship & Job Portal Hub. A place where you can find your dream job.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                    <div class="single-footer-caption mb-50">
+                        <div class="footer-tittle">
+                            <h4>Important Links</h4>
+                            <ul>
+                                <li><a href="{% url 'index' %}">Home</a></li>
+                                <li><a href="{% url 'job_listing' %}">Find Jobs</a></li>
+                                <li><a href="{% url 'contact' %}">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                    <div class="single-footer-caption mb-50">
+                        <div class="footer-tittle">
+                            <h4>Newsletter</h4>
+                            <p>Sign up to our newsletter to be updated with new postings!</p>
+                            <div class="footer-form">
+                                <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part">
+                                    <input type="email" name="email" placeholder="Email Address" class="placeholder hide-on-focus">
+                                    <div class="form-icon">
+                                        <button type="submit" class="email_icon newsletter-submit button-contactForm">
+                                            <img src="{% static 'assets/img/icon/form.png' %}" alt="">
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'employer') {
+        const myAppLink = document.getElementById('nav-myapplications');
+        if (myAppLink) myAppLink.style.display = 'none';
+    }
+    if (userType === 'student') {
+        const empAdminLink = document.getElementById('nav-employeradmin');
+        if (empAdminLink) empAdminLink.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

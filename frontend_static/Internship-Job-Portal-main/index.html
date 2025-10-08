@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Internship & Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="slider-area">
+    <div class="slider-active">
+        <div class="single-slider slider-height d-flex align-items-center" data-background="{% static 'assets/img/hero/h1_hero.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-9 col-md-10">
+                        <div class="hero__caption">
+                            <h1>Find the most exciting startup jobs</h1>
+                        </div>
+                    </div>
+                </div>
+                                <div class="row">
+                    <div class="col-xl-8">
+                        <form action="#" class="search-box">
+                            <div class="input-form">
+                                <input type="text" placeholder="Job Title or keyword">
+                            </div>
+                            <div class="select-form">
+                                <div class="select-itms">
+                                    <select name="select" id="select1">
+                                        <option value="">Location 1</option>
+                                        <option value="">Location 2</option>
+                                        <option value="">Location 3</option>
+                                        <option value="">Location 4</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="search-form">
+                                <a href="{% url 'job_listing' %}">Find job</a>
+                            </div>  
+                        </form>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="our-services section-pad-t30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle text-center">
+                    <span>FEATURED TOURS Packages</span>
+                    <h2>Browse Top Categories</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            {% comment %} Repeat for each category {% endcomment %}
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                <div class="single-services text-center mb-30">
+                    <div class="services-ion"><span class="flaticon-tour"></span></div>
+                    <div class="services-cap">
+                        <h5><a href="{% url 'job_listing' %}">Design & Creative</a></h5>
+                        <span>(653)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                <div class="single-services text-center mb-30">
+                    <div class="services-ion"><span class="flaticon-cms"></span></div>
+                    <div class="services-cap">
+                        <h5><a href="{% url 'job_listing' %}">Design & Development</a></h5>
+                        <span>(658)</span>
+                    </div>
+                </div>
+            </div>
+                    </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="browse-btn2 text-center mt-50">
+                    <a href="{% url 'job_listing' %}" class="border-btn2">Browse All Sectors</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="online-cv cv-bg section-overly pt-90 pb-120" data-background="{% static 'assets/img/gallery/cv_bg.jpg' %}">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="cv-caption text-center">
+                    <p class="pera1">FEATURED TOURS Packages</p>
+                    <p class="pera2">Make a Difference with Your Online Resume!</p>
+                    <a href="#" class="border-btn2 border-btn4">Upload your CV</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="browse-btn2 text-center mt-50">
+                    {% comment %} Note: The link below should probably be linked to the student CV upload view, not a generic link. E.g., {% url 'users:upload_cv' %} {% endcomment %}
+                    <a href="{% url 'users:upload_cv' %}" class="border-btn2 border-btn4">Upload your CV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="featured-job-area feature-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle text-center">
+                    <span>Recent Job</span>
+                    <h2>Featured Jobs</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                {% comment %} Example job item. Repeat dynamically in Django {% endcomment %}
+                <div class="single-job-items mb-30">
+                    <div class="job-items">
+                        <div class="company-img">
+                            <a href="{% url 'job_details' 1 %}"><img src="{% static 'assets/img/icon/job-list1.png' %}" alt=""></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="{% url 'job_details' 1 %}"><h4>Digital Marketer</h4></a>
+                            <ul>
+                                <li>Creative Agency</li>
+                                <li><i class="fas fa-map-marker-alt"></i> Johannesburg, SA</li>
+                                <li>R3500 - R10000</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="items-link f-right">
+                        <a href="{% url 'job_details' 1 %}">Full Time</a>
+                        <span>7 hours ago</span>
+                    </div>
+                </div>
+                            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="browse-btn2 text-center mt-50">
+                    <a href="{% url 'job_listing' %}" class="border-btn2">View All Jobs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="apply-process-area apply-bg pt-150 pb-150" data-background="{% static 'assets/img/gallery/how-applybg.png' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle white-text text-center">
+                    <span>Apply process</span>
+                    <h2>How it works</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion"><span class="flaticon-search"></span></div>
+                    <div class="process-cap">
+                        <h5>1. Search a job</h5>
+                        <p>Search for job you want</p>
+                    </div>
+                </div>
+            </div>
+                        <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion"><span class="flaticon-curriculum-vitae"></span></div>
+                    <div class="process-cap">
+                        <h5>2. Apply for job</h5>
+                        <p>Submit your application with all relevant documents.</p>
+                    </div>
+                </div>
+            </div>
+                        <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion"><span class="flaticon-tour"></span></div>
+                    <div class="process-cap">
+                        <h5>3. Wait for feedback</h5>
+                        <p>The recruiter will provide feedback on your application.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'employer') {
+        const myAppLink = document.getElementById('nav-myapplications');
+        if (myAppLink) myAppLink.style.display = 'none';
+    }
+    if (userType === 'student') {
+        const empAdminLink = document.getElementById('nav-employeradmin');
+        if (empAdminLink) empAdminLink.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

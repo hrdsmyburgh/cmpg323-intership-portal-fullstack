@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Main - Internship & Job Portal{% endblock %}
+
+{% block content %}
+
+<style>
+    .main-page {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 10%;
+        background-color: #f5f5f5;
+    }
+    .main-page img {
+        margin: 0 auto 30px auto;
+        display: block;
+    }
+    .main-page h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    .main-page p {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    .main-page a {
+        color: #1bcf6b;
+        text-decoration: none;
+    }
+    .main-page a:hover {
+        text-decoration: underline;
+    }
+    .main-page .copyright {
+        color: red;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="main-page">
+    <a href="https://colorlib.com/wp/templates/">
+        <img src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-push-logo22.png" alt="Colorlib logo">
+    </a>
+
+    <h1>Thank you for using our template!</h1>
+    <p>For more awesome templates please visit <strong><a href="https://colorlib.com/wp/templates/">Colorlib</a></strong>.</p>
+
+    <p class="copyright">
+        Copyright information for the template can't be altered/removed unless you purchase a license.
+    </p>
+
+    <p class="copyright">
+        Removing copyright information without the license will result in suspension of your hosting and/or domain name(s).
+    </p>
+
+    <p class="copyright">
+        More information about the license is available <a href="https://colorlib.com/wp/licence/">here</a>.
+    </p>
+</div>
+
+{% endblock %}

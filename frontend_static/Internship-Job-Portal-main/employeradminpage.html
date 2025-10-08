@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Employer Admin – Internship & Job Portal{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Sidebar -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">Employer Dashboard</span>
+        </a>
+        <ul class="side-menu top">
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="{% url 'logout' %}" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Content -->
+    <section id="content">
+        <main>
+            <ul class="box-info">
+                <li>
+                    <i class='bx bxs-group'></i>
+                    <span class="text">
+                        <h3 id="applicationsCount">{{ applicants|length }}</h3>
+                        <p>Applications</p>
+                    </span>
+                </li>
+            </ul>
+
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Recent Applications</h3>
+                        <i class='bx bx-filter' id="filterIcon"></i>
+                    </div>
+
+                    <!-- Filter Form -->
+                    <div id="filterForm" class="filter-form">
+                        <input type="text" id="filterStatus" placeholder="Filter by Status">
+                        <input type="text" id="filterJob" placeholder="Filter by Job Applied">
+                        <button id="applyFilterBtn">Apply Filter</button>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <select id="actionDropdown" class="action-dropdown">
+                            <option value="" disabled selected>Action</option>
+                            <option value="accept">Accept</option>
+                            <option value="reject">Reject</option>
+                        </select>
+                        <button class="apply-action-btn">Apply</button>
+                    </div>
+
+                    <!-- Applications Table -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th>Name of Applicant</th>
+                                <th>Job Applied</th>
+                                <th>Status</th>
+                                <th>CV</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for applicant in applicants %}
+                            <tr data-job="{{ applicant.job }}" data-status="{{ applicant.status }}">
+                                <td>
+                                    <div class="fs-checkbox-wrapper">
+                                        <input class="fs-checkbox" type="checkbox" name="select-applicant" value="{{ applicant.id }}">
+                                    </div>
+                                </td>
+                                <td>{{ applicant.name }}</td>
+                                <td>{{ applicant.job }}</td>
+                                <td><span class="status {{ applicant.status|lower }}">{{ applicant.status }}</span></td>
+                                <td>
+                                    <a href="{{ applicant.cv.url }}" style="color:red;" target="_blank">
+                                        {{ applicant.cv_name }}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" style="text-align:center;">No applications found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </section>
+</main>
+
+<!-- JS -->
+{% block extra_scripts %}
+<script src="{% static 'js/employeradmin.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'employer') {
+        const myAppLink = document.getElementById('nav-myapplications');
+        if (myAppLink) myAppLink.style.display = 'none';
+    }
+    if (userType === 'student') {
+        const empAdminLink = document.getElementById('nav-employeradmin');
+        if (empAdminLink) empAdminLink.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Applications - Internship & Job Portal{% endblock %}
+
+{% block content %}
+
+<!-- Sidebar -->
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class='bx bxs-smile'></i>
+        <span class="text">Student Profile</span>
+    </a>
+    <ul class="side-menu top">
+        <li class="active">
+            <a href="#"><i class='bx bxs-dashboard'></i><span class="text">Dashboard</span></a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="index.html" class="logout"><i class='bx bxs-log-out-circle'></i><span class="text">Logout</span></a>
+        </li>
+    </ul>
+</section>
+
+<!-- Content -->
+<section id="content">
+    <main>
+        <ul class="box-info">
+            <li>
+                <i class='bx bxs-group'></i>
+                <span class="text">
+                    <h3 id="applicationCount">5</h3>
+                    <p>Applications</p>
+                </span>
+            </li>
+        </ul>
+
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Recent Applications</h3>
+                    <i class='bx bx-filter' id="filterIcon"></i>
+                </div>
+
+                <div id="filterForm" class="filter-form">
+                    <input type="text" id="filterStatus" placeholder="Filter by Status">
+                    <input type="text" id="filterJob" placeholder="Filter by Job Applied">
+                    <button id="applyFilterBtn">Apply Filter</button>
+                </div>
+                <br>
+                <div class="actions">
+                    <select id="actionDropdown" class="action-dropdown">
+                        <option value="" disabled selected>Action</option>
+                        <option value="withdraw">Withdraw application</option>
+                    </select>
+                    <button class="apply-action-btn">Apply</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Job applied</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th>CV</th>
+                            <th>Withdraw Application</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td>Internship</td>
+                            <td>Tech Creators</td>
+                            <td><span class="status completed">In progress</span></td>
+                            <td><a href="{% static 'assets/img/cvexample.pdf' %}" style="color: orange;" target="_blank">cvname.pdf</a></td>
+                            <td style="color: red;">Withdraw Application</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td>Internship</td>
+                            <td>Amazing Tech</td>
+                            <td><span class="status completed">In progress</span></td>
+                            <td><a href="{% static 'assets/img/cvexample.pdf' %}" style="color: orange;" target="_blank">cvname.pdf</a></td>
+                            <td style="color: red;">Withdraw Application</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</section>
+
+<!-- JS -->
+<script>
+// Hide nav links based on userType
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'employer') document.getElementById('nav-myapplications')?.style.display = 'none';
+    if (userType === 'student') document.getElementById('nav-employeradmin')?.style.display = 'none';
+});
+
+// Filter and withdraw applications
+document.addEventListener('DOMContentLoaded', function() {
+    const table = document.querySelector('table tbody');
+    const applicationCount = document.getElementById('applicationCount');
+
+    function updateApplicationCount() {
+        let count = 0;
+        table.querySelectorAll('tr').forEach(row => { if (row.style.display !== 'none') count++; });
+        applicationCount.textContent = count;
+    }
+
+    document.getElementById('applyFilterBtn').addEventListener('click', function() {
+        const jobFilter = document.getElementById('filterJob').value.toLowerCase().trim();
+        const statusFilter = document.getElementById('filterStatus').value.toLowerCase().trim();
+
+        table.querySelectorAll('tr').forEach(row => {
+            const jobText = row.cells[1].textContent.toLowerCase();
+            const statusText = row.cells[3].textContent.toLowerCase();
+            row.style.display = (!jobFilter || jobText.includes(jobFilter)) &&
+                                (!statusFilter || statusText.includes(statusFilter)) ? '' : 'none';
+        });
+
+        updateApplicationCount();
+    });
+
+    document.querySelector('.apply-action-btn').addEventListener('click', function() {
+        if (document.getElementById('actionDropdown').value === 'withdraw') {
+            const rows = table.querySelectorAll('tr');
+            for (let i = rows.length - 1; i >= 0; i--) {
+                if (rows[i].querySelector('input[type="checkbox"]').checked) {
+                    rows[i].remove();
+                }
+            }
+            updateApplicationCount();
+        }
+    });
+
+    updateApplicationCount();
+});
+</script>
+
+{% endblock %}

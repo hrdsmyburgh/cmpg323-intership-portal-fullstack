@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Job Listings - Internship & Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="slider-area">
+    <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/about.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center">
+                        <h2>Get your job</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="job-listing-area pt-120 pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-4">
+                <div class="job-category-listing mb-50">
+                    <div class="single-listing">
+                        <div class="small-section-tittle2"><h4>Job Category</h4></div>
+                        <div class="select-job-items2">
+                            <select name="category">
+                                <option value="">All Category</option>
+                                <option value="cat1">Category 1</option>
+                                <option value="cat2">Category 2</option>
+                                <option value="cat3">Category 3</option>
+                                <option value="cat4">Category 4</option>
+                            </select>
+                        </div>
+
+                        <div class="select-Categories pt-80 pb-50">
+                            <div class="small-section-tittle2"><h4>Job Type</h4></div>
+                            <label class="container">Full Time<input type="checkbox"><span class="checkmark"></span></label>
+                            <label class="container">Part Time<input type="checkbox" checked><span class="checkmark"></span></label>
+                            <label class="container">Remote<input type="checkbox"><span class="checkmark"></span></label>
+                            <label class="container">Freelance<input type="checkbox"><span class="checkmark"></span></label>
+                        </div>
+                    </div>
+
+                    <div class="single-listing">
+                        <div class="small-section-tittle2"><h4>Job Location</h4></div>
+                        <div class="select-job-items2">
+                            <select name="location">
+                                <option value="">Anywhere</option>
+                                <option value="loc1">Location 1</option>
+                                <option value="loc2">Location 2</option>
+                                <option value="loc3">Location 3</option>
+                            </select>
+                        </div>
+
+                        <div class="select-Categories pt-80 pb-50">
+                            <div class="small-section-tittle2"><h4>Experience</h4></div>
+                            <label class="container">1-2 Years<input type="checkbox"><span class="checkmark"></span></label>
+                            <label class="container">2-3 Years<input type="checkbox" checked><span class="checkmark"></span></label>
+                            <label class="container">3-6 Years<input type="checkbox"><span class="checkmark"></span></label>
+                            <label class="container">6+ Years<input type="checkbox"><span class="checkmark"></span></label>
+                        </div>
+                    </div>
+
+                    <div class="single-listing">
+                        <div class="small-section-tittle2"><h4>Posted Within</h4></div>
+                        <label class="container">Any<input type="checkbox"><span class="checkmark"></span></label>
+                        <label class="container">Today<input type="checkbox" checked><span class="checkmark"></span></label>
+                        <label class="container">Last 2 days<input type="checkbox"><span class="checkmark"></span></label>
+                        <label class="container">Last 3 days<input type="checkbox"><span class="checkmark"></span></label>
+                        <label class="container">Last 5 days<input type="checkbox"><span class="checkmark"></span></label>
+                        <label class="container">Last 10 days<input type="checkbox"><span class="checkmark"></span></label>
+                    </div>
+
+                    <div class="single-listing">
+                        <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                            <div class="small-section-tittle2"><h4>Filter Jobs</h4></div>
+                            <div class="widgets_inner">
+                                <div class="range_item">
+                                    <input type="text" class="js-range-slider" value="" />
+                                    <div class="d-flex align-items-center">
+                                        <div class="price_text"><p>Salary :</p></div>
+                                        <div class="price_value d-flex justify-content-center">
+                                            <input type="text" class="js-input-from" id="amount_from" readonly />
+                                            <span>to</span>
+                                            <input type="text" class="js-input-to" id="amount_to" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                        <button id="applyFilterBtn" class="btn btn-success mt-3">Apply Filter</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-9 col-lg-9 col-md-8">
+                <section class="featured-job-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="count-job mb-35">
+                                                                        <span>{{ jobs|length }} Jobs found</span>
+                                    <div class="select-job-items">
+                                        <span>Sort by</span>
+                                        <select name="sort">
+                                            <option value="">None</option>
+                                            <option value="salary_desc">Salary (highest to lowest)</option>
+                                            <option value="salary_asc">Salary (lowest to highest)</option>
+                                            <option value="recent">Recently Posted</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                                                                                {% for job in jobs %}
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                                                        <a href="{% url 'job_details' pk=job.id %}"><img src="{% static 'assets/img/icon/job-list1.png' %}" alt=""></a>
+                                </div>
+                                <div class="job-tittle job-tittle2">
+                                                                        <a href="{% url 'job_details' pk=job.id %}"><h4>{{ job.title }}</h4></a>
+                                    <ul>
+                                                                                <li>{{ job.employer.company_name|default:"N/A" }}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i> {{ job.location }}</li>
+                                        <li>R{{ job.salary_min|default:0 }} - R{{ job.salary_max|default:0 }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link items-link2 f-right">
+                                                                <a href="{% url 'job_details' pk=job.id %}">{{ job.type }}</a>
+                                                                <span>{{ job.posted_on|timesince }} ago</span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="alert alert-info" role="alert">
+                            No active job postings available at this time.
+                        </div>
+                        {% endfor %}
+
+                                                                                            </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pagination-area pb-115 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
+                    </ul>
+                </nav>
+            </div>
+                    </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'employer') {
+        const myAppLink = document.getElementById('nav-myapplications');
+        if (myAppLink) myAppLink.style.display = 'none';
+    }
+    if (userType === 'student') {
+        const empAdminLink = document.getElementById('nav-employeradmin');
+        if (empAdminLink) empAdminLink.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

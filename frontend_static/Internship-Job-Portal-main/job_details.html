@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Job Details - {{ job.title }}{% endblock %}
+
+{% block content %}
+
+<div class="slider-area">
+    <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/about.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center">
+                        <h2>{{ job.title }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="job-post-company pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-between">
+
+            <div class="col-xl-7 col-lg-8">
+
+                <div class="single-job-items mb-50">
+                    <div class="job-items">
+                        <div class="company-img company-img-details">
+                            <a href="#"><img src="{% static 'assets/img/icon/job-list1.png' %}" alt=""></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="#"><h4>{{ job.title }}</h4></a>
+                            <ul>
+                                <li>{{ job.employer.company_name|default:"N/A" }}</li> 
+                                <li><i class="fas fa-map-marker-alt"></i> {{ job.location }}</li>
+                                <li>R{{ job.salary_min|default:0 }} - R{{ job.salary_max|default:0 }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-post-details">
+
+                    <div class="post-details1 mb-50">
+                        <div class="small-section-tittle">
+                            <h4>Job Description</h4>
+                        </div>
+                        <p>{{ job.description|linebreaks }}</p>
+                    </div>
+
+                    <div class="post-details2 mb-50">
+                        <div class="small-section-tittle">
+                            <h4>Required Knowledge, Skills, and Abilities</h4>
+                        </div>
+                        <p>{{ job.detailed_experience|linebreaks }}</p>
+                        </div>
+
+                    <div class="post-details2 mb-50">
+                        <div class="small-section-tittle">
+                            <h4>Experience Required</h4>
+                        </div>
+                        <ul>
+                            <li>**Experience Level:** {{ job.experience }}</li>
+                            </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-4 col-lg-4">
+
+                <div class="post-details3 mb-50">
+                    <div class="small-section-tittle">
+                        <h4>Job Overview</h4>
+                    </div>
+                    <ul>
+                        <li>Posted date : <span>{{ job.posted_on|date:"d M Y" }}</span></li>
+                        <li>Location : <span>{{ job.location }}</span></li>
+                        <li>Vacancy : <span>{{ job.vacancy }}</span></li>
+                        <li>Job nature : <span>{{ job.type }}</span></li>
+                        <li>Salary : <span>R{{ job.salary_min }} - R{{ job.salary_max }}</span></li>
+                        <li>Application date : <span>{{ job.deadline|date:"d M Y" }}</span></li>
+                    </ul>
+                    <div class="apply-btn2">
+                        <a href="{% url 'application_form' job_id=job.id %}" class="btn">Apply Now</a>
+                    </div>
+                </div>
+
+                <div class="post-details4 mb-50">
+                    <div class="small-section-tittle">
+                        <h4>Company Information</h4>
+                    </div>
+                    <span>{{ job.employer.company_name|default:"N/A" }}</span>
+                    <p>{{ job.employer.description|default:"No company description available." }}</p>
+                    <ul>
+                        <li>Name: <span>{{ job.employer.company_name|default:"N/A" }}</span></li>
+                        <li>Web : <span>{{ job.employer.website|default:"N/A" }}</span></li>
+                        <li>Email: <span>{{ job.employer.user.email|default:"N/A" }}</span></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'employer') {
+        const myAppLink = document.getElementById('nav-myapplications');
+        if (myAppLink) myAppLink.style.display = 'none';
+    }
+    if (userType === 'student') {
+        const empAdminLink = document.getElementById('nav-employeradmin');
+        if (empAdminLink) empAdminLink.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

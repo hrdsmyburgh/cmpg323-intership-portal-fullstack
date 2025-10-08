@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+  <div class="form-container">
+    <h1>Register</h1>
+    <form id="registrationForm">
+      <label>First Name</label>
+      <input type="text" name="first_name" required>
+      <label>Last Name</label>
+      <input type="text" name="last_name" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Phone Number</label>
+      <input type="text" name="phone_number" required>
+      <label>Password</label>
+      <input type="password" name="password" id="password" required>
+      <label>Confirm Password</label>
+      <input type="password" name="confirm_password" id="confirm_password" required>
+
+      <p>Gender</p>
+      <label><input type="radio" name="gender" value="male"> Male</label>
+      <label><input type="radio" name="gender" value="female"> Female</label>
+      <label><input type="radio" name="gender" value="other"> Prefer not to say</label>
+
+      <p>Register as</p>
+      <label><input type="radio" name="user_type" value="student" required> Student / External Applicant</label>
+      <label><input type="radio" name="user_type" value="employer"> Employer</label>
+
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+  </div>
+</main>
+
+<script>
+document.getElementById('registrationForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm_password').value;
+    if(password !== confirm){ alert("Passwords do not match!"); return; }
+
+    const formData = {
+        username: document.querySelector('input[name="email"]').value,
+        email: document.querySelector('input[name="email"]').value,
+        password: password,
+        role: document.querySelector('input[name="user_type"]:checked').value
+    };
+
+    try{
+        const response = await fetch(
+            "{% url 'register' %}",
+            { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(formData) }
+        );
+        if(response.ok){
+            alert("Registration successful!");
+            localStorage.setItem('userRole', formData.role);
+            localStorage.setItem('username', formData.username);
+            window.location.href = "{% url 'login' %}";
+        } else {
+            const err = await response.json();
+            alert("Registration failed: " + JSON.stringify(err));
+        }
+    } catch(err){
+        alert("Request failed: " + err);
+    }
+});
+</script>
+{% endblock %}

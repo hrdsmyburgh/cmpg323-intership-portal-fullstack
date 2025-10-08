@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${DJANGO_USER}
+      POSTGRES_PASSWORD: ${DJANGO_PASSWORD}
+      POSTGRES_DB: ${DJANGO_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Ensure that local db is persistent
+volumes:
+  postgres_data:
